@@ -18,16 +18,6 @@ import Marquee from "react-fast-marquee";
 // //////// React icon
 import { IoIosSearch, IoIosArrowUp } from "react-icons/io";
 import { CgMenuRightAlt } from "react-icons/cg";
-import { LiaBoxOpenSolid } from "react-icons/lia";
-import { RiFilePaper2Line } from "react-icons/ri";
-import { GiTwoCoins, GiStamper } from "react-icons/gi";
-import { HiUserGroup } from "react-icons/hi2";
-import { MdOutlineHistoryEdu } from "react-icons/md";
-import { TbBuildingCastle } from "react-icons/tb";
-import { FaPhotoFilm } from "react-icons/fa6";
-import { ImNewspaper } from "react-icons/im";
-import { FaUserAlt } from "react-icons/fa";
-import { CiInboxIn } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 // //////// React icon end
 
@@ -54,7 +44,7 @@ export default function Header() {
   const fetchData = async () => {
     try {
       const response = await DataService.get(endpoints.categoryResourceApi);
-      // console.log("Manba  catigory", response);
+      console.log("Manba  catigory Header dan ", response);
       setApiData(response);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -222,7 +212,7 @@ export default function Header() {
                             <Link
                               className="bar-drop-link"
                               to={`/sources/archive/${categoryResurs.id}`}
-                              onClick={() => { setShowDRB(!showDRB), console.log(categoryResurs.id); }}
+                              onClick={() => { setShowDRB(!showDRB), console.log('tayoini kor1', typeof categoryResurs.id); }}
                             >
                               {" "}
                               {/* <TbBuildingCastle /> */}
@@ -376,7 +366,7 @@ export default function Header() {
                 className="login-item"
                 whileHover={{ x: 7, opacity: 0.5 }}
               >
-                <Link className="nav-login-link">Registratsiya</Link>
+                <Link className="nav-login-link" to='/register'>Registratsiya</Link>
               </motion.li>
             </motion.ul>
           </div>

@@ -12,6 +12,8 @@ import { IoMdEye } from "react-icons/io";
 import Breadcrumb from "../Components/component/Breadcrumb";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import CardDetailMap from "../Components/component/CardDetailMap";
+import MapComponent from "../Components/component/MapComponent";
 
 export default function CardDeteil() {
   // img carousel
@@ -25,16 +27,16 @@ export default function CardDeteil() {
       endpoints.categoryResourceDetailById(route?.id)
     );
     setApiData(response);
-    console.log(response, "card filter detail");
-    // let x = document.querySelector("title");
-    // x.textContent = `Jadidlar / ${response.title}`;
+    console.log(response, "cardввввққққвқвқвқвқвқвқвқвқвқ filter detail");
+
   };
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <div><Breadcrumb catigory={apiData?.cat_name} deteil={apiData?.title} link={`/sources/archive/${apiData?.catigory}`} />
+    <div key={23}>
+      <Breadcrumb catigory={apiData?.cat_name} deteil={apiData?.title} link={`/sources/archive/${apiData.category}`} />
       <div className="card__container">
 
 
@@ -46,17 +48,14 @@ export default function CardDeteil() {
             <div className="grid lg:grid-cols-2 gap-8 max-lg:max-w-2xl mx-auto">
               <div className="text-left">
                 <h2 className="text-4xl font-extrabold mb-6">{apiData?.title}</h2>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Maxime omnis ipsam ullam non voluptatum iure qui eos delectus
-                ducimus ratione? Earum quasi ea, laborum autem ipsum, expedita
-                repellendus esse commodi numquam fugiat voluptates tempora! Doloribus
-                veniam magni ipsum? Accusantium sequi illo magni? Dolore nostrum officiis
-                assumenda magni, eligendi iure, provident doloremque libero aperiam harum
-                ea vel minus dignissimos nulla. Ipsum eius quod asperiores maiores cupiditate
-                odio sint nisi maxime? Explicabo nostrum excepturi quis eos. Molestias,
-                aliquam libero distinctio necessitatibus esse delectus quod vitae
-                repudiandae at laboriosam odit eum, id hic aspernatur ad, quae
-                ui voluptate illo corrupti quo? Fugit, sequi.
+                {apiData?.attributes_list?.map((e) =>
+                  <p className="py-[10px]"><span className="font-bold">{e.attributes_title}: </span> {e.attributes_description}</p>
+                )}
+
+
+
+                <p className="py-[10px]">{apiData?.content}</p>
+
 
                 <div className="flex items-start space-x-2 flex-wrap gap 5px mt-4">
 
@@ -119,8 +118,11 @@ export default function CardDeteil() {
                       <button className="btn text-[30px] text-[#fff]"><IoCloseOutline /></button>
                     </form>
                     <Swiper className="mySwiper h-[80vh]">
+                      {/* {apiData?.iterive_list?.map((e) => */}
                       <SwiperSlide className="text-matn-color bg-no-repeat bg-contain bg-center " style={{ backgroundImage: `url(${apiData?.image})` }} ></SwiperSlide>
-                      <SwiperSlide></SwiperSlide>
+                      {/* )} */}
+
+
 
                     </Swiper>
 
@@ -207,7 +209,9 @@ export default function CardDeteil() {
                       />
                     </svg>
                   </button>
-                  <button disabled className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black">
+                  <button className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black"
+                    onClick={() => document.getElementById('map').showModal()}
+                  >
                     Xarita
                     <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
                       width="20px" height="20px" viewBox="0 0 64 64" enableBackground="new 0 0 64 64" xmlSpace="preserve">
@@ -251,6 +255,20 @@ export default function CardDeteil() {
 	C60.979,28.894,60.436,28.85,59.989,29.319z"/>
                     </svg>
                   </button>
+
+                  <dialog id="map" className="modal w-full bg-[#000000aa] h-full m-auto  ">
+                    <form method="dialog" className=" w-[100%] flex justify-end">
+                      {/* if there is a button in form, it will close the modal */}
+                      <button className="btn text-[30px] text-[#fff]"><IoCloseOutline /></button>
+                    </form>
+                    <div className="m-auto h-[70vh]">
+                      <div className="h-[70vh]"><CardDetailMap /></div>
+
+
+                    </div>
+                  </dialog>
+
+
                 </div>
               </div>
               <div className="flex justify-center flex-col items-center">
@@ -398,14 +416,31 @@ export default function CardDeteil() {
                 </div>
               </div>
             </div>
+            <section className="text-matn-color my-[30px]">
+              <p className="">
+                {apiData?.contents_list?.map((e) =>
+                  <>
+                    <h1 className="py-[20px] font-bold text-[30px]">
+                      {e.contents_title}
+                    </h1>
+                    <p className="py-[20px] text-[20px] leading-8">
+                      {
+                        e.contents_description}
+                    </p>
+                  </>
+
+
+                )}
+
+
+              </p>
+            </section>
           </div>
 
         </div>
       </div>
 
-      <section className="text-matn-color">
 
-      </section>
     </div>
   );
 }

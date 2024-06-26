@@ -3,8 +3,9 @@ import Acardion from '../Components/Home/Acardion'
 import HomeCardsArchi from '../Components/Home/HomeCardsArchi'
 import HomeCardMedia from '../Components/Home/HomeCardMedia'
 // import Shu from '../Components/component/Shu'
-import DemoShablon from './DemoShablon'
+// import DemoShablon from './DemoShablon'
 import MapComponent from '../Components/component/MapComponent'
+import HomeSliderLib from '../Components/Home/HomeSliderLib'
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
         <HomeCardsArt />
         <HomeCardMatbuot />
         <HomeCardsArxiv /> */}
-      <HomeCardMedia />
+      {/* <HomeCardMedia /> */}
       {/* <iframe class="w-full aspect-video ..." src={`https://youtu.be/zdlhU3-koOY?si=R4JYsZV3g8rg0g9r`}></iframe> */}
       {/* <iframe
         class="w-[600px] aspect-[4/2]"
@@ -35,6 +36,7 @@ export default function Home() {
       </iframe> */}
       {/* <ViewKop /> */}
       {/*  */}
+      {/* <HomeSliderLib /> */}
 
 
 

@@ -4,6 +4,8 @@ import { FaPlus } from "react-icons/fa6";
 import { IoFilter } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import { motion } from "framer-motion";
+import { DataService } from "../../config/dataService";
+import { endpoints } from "../../config/endpoints";
 
 
 export default function Filter() {
@@ -21,6 +23,20 @@ export default function Filter() {
   const onChange = (e) => {
     setShowHide({ key: e, value: showHide.key == e ? !showHide.value : true });
   };
+
+  // fetch Data
+
+  const [apiData, setApiData] = useState();
+  const fetchData = async () => {
+    const response = await DataService.get(endpoints.period_filter);
+    // console.log(response, "period_filter");
+    setApiData(response);
+    // let x = document.querySelector("title");
+    // x.textContent = `Jadidlar / ${response.title}`;
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className="sidebar-filter">
       {/* // map shuni ichida ishlidi */}
@@ -53,8 +69,8 @@ export default function Filter() {
             <IoIosClose />
           </span>
         </h2>
-        {[1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((e) => (
-          <div className="filter-box" key={e}>
+        {apiData?.results.map((e) => (
+          <div className="filter-box" key={e.id}>
             {/* setVal({ ...val, key: e, value: !val.value }) */}
             <h3>
               Davr bo'yicha{" "}

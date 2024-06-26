@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "./url.json";
 
 const authHeader = () =>
-  localStorage.getItem("JADIDLAR_TOKEN")
+  localStorage.getItem("AQILLY_TOKEN")
     ? {
         Authorization: "Bearer " + localStorage.getItem("JADIDLAR_TOKEN"),
         "Accept-Language": localStorage.getItem("JADID_LAN") || "uz",
@@ -80,7 +80,7 @@ client.interceptors.response.use(
         break;
       case 401:
         {
-          localStorage.removeItem("JADIDLAR_TOKEN");
+          localStorage.removeItem("AQILLY_TOKEN");
           // window.location.reload();
         }
         message = error.response?.data;

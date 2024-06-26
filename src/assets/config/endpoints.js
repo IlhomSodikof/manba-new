@@ -9,4 +9,6 @@ export const endpoints = {
   categoryResourceApi: "/api/category-resource/", /// headerdagi manbalar categoriyasi
   categoryResourceApiById: (id) => `/api/category-resource/${id}/`,
   categoryResourceDetailById: (id) => `/api/resource_api-detail/${id}/`,
+  register: `/user/register/`,
+  period_filter: `/period_filter/`,
 };
