@@ -56,6 +56,7 @@ export default function Header() {
   }, []);
 
 
+
   ///////// hijriy
   const [hijriList, setHijriList] = useState({ year: "", day: "", month: "" });
 
@@ -106,8 +107,11 @@ export default function Header() {
     };
   }, []);
 
-  // live time code
 
+  // live time code
+  useEffect(() => {
+    setTime(new Date())
+  }, [time])
   return (
     <header>
       <div className="header-top-box">

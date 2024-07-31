@@ -14,7 +14,7 @@ export default function ReactDatePicker() {
   const [hijriList, setHijriList] = useState({ year: "", day: "", month: "" });
 
   useEffect(() => {
-    // setInterval(() => setTime(new Date()), 1000);
+    // setInterval(() => setTime(new Date()), 1000);/
     const manth = new Intl.DateTimeFormat("en-TN-u-ca-islamic", {
       day: "numeric",
       month: "numeric",

@@ -21,22 +21,80 @@ export default function CardDeteil() {
 
   // bu qism api lar bilan ishlash uchun
   const [apiData, setApiData] = useState([]);
+  const [videos, setFiltvideo] = useState(false);
+  const [Fotos, setFotoLink] = useState(false);
+  const [Audios, setAudiosLink] = useState(false);
+  const [location, setLocation] = useState(false);
+  const [locdata, setLocData] = useState(false);
+  const [max3d, setMax3d] = useState(false);
+  const [Files, setFiles] = useState(false);
+
   const fetchData = async () => {
-    console.log(route);
+
+    // console.log(route);
     const response = await DataService.get(
       endpoints.categoryResourceDetailById(route?.id)
     );
     setApiData(response);
-    console.log(response, "cardввввққққвқвқвқвқвқвқвқвқвқ filter detail");
+    console.log(response, "detaildan chiqdi  shula", response?.locations)
+
+    if (response?.locations?.length > 0) {
+      setLocData(apiData?.locations)
+      setLocation(true)
+      console.log(response?.locations);
+    }
+    if (response?.videos?.length > 0) {
+      setFiltvideo(true)
+
+    }
+    if (response?.galleries?.length > 0) {
+      setFotoLink(true)
+    }
+    // response?.map((e) => {
+    //   console.log(e, "фавқфавфқавқавқashula");
+    //   if (e.status == 'Video') {
+    //     setFiltvideo(true)
+
+    //   }
+    //   if (e.status == 'Gallery') {
+    //     setFotoLink(e.file)
+    //   }
+    //   if (e.status == 'Audio') {
+    //     setAudiosLink(e.file)
+    //     // audio qilinmadi
+    //   }
+    //   if (e.status == 'Location') {
+    //     setLocation(true)
+
+    //   }
+    //   if (e.status == 'File') {
+    //     setFiles(e.file)
+    //     // audio qilinmadi
+    //   }
+    //   if (e.status == 'Virtual_reality') {
+    //     setMax3d(e.file)
+    //     // audio qilinmadi
+    //   }
+
+
+    // }
+
+    // )
+
 
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
+
+
+
+
   return (
     <div key={23}>
-      <Breadcrumb catigory={apiData?.cat_name} deteil={apiData?.title} link={`/sources/archive/${apiData.category}`} />
+      <Breadcrumb catigory={apiData?.category_name} deteil={apiData?.title} link={`/sources/archive/${apiData.category}`} />
       <div className="card__container">
 
 
@@ -44,23 +102,18 @@ export default function CardDeteil() {
 
         <div>
 
-          <div className="font-[sans-serif] text-matn-color bg-gray-100 px-6 py-20">
+          <div className="font-[sans-serif] text-matn-color bg-gray-100 px-6 py-20 ">
             <div className="grid lg:grid-cols-2 gap-8 max-lg:max-w-2xl mx-auto">
               <div className="text-left">
-                <h2 className="text-4xl font-extrabold mb-6">{apiData?.title}</h2>
-                {apiData?.attributes_list?.map((e) =>
-                  <p className="py-[10px]"><span className="font-bold">{e.attributes_title}: </span> {e.attributes_description}</p>
+                <h2 className="text-4xl font-extrabold mb-[100px] mt-[20px]">{apiData?.title}</h2>
+                {apiData?.attributes_list?.map((e, i) =>
+                  <p className="py-[10px]" key={i}><span className="font-bold">{e.attributes_title}: </span> {e.attributes_description}</p>
                 )}
-
-
-
-                <p className="py-[10px]">{apiData?.content}</p>
-
-
-                <div className="flex items-start space-x-2 flex-wrap gap 5px mt-4">
-
+                <p className="py-[10px]" key={apiData?.category} dangerouslySetInnerHTML={{ __html: apiData?.content }}></p>
+                <div className="flex items-start space-x-2 flex-wrap gap 5px lg:mt-[70px]">
                   {/* Audio box */}
-                  <button className="rounded-full flex items-center  gap-2 py-1 my-2 px-4 font-medium border text-white cursor-pointer bg-black border-black"
+
+                  <button disabled={!Audios} className="rounded-full flex items-center  gap-2 py-1 my-2 px-4 font-medium border text-white cursor-pointer bg-black border-black"
                     onClick={() => document.getElementById('audio').showModal()}
                   > Audio
                     <svg width="20px" height="20px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -81,17 +134,11 @@ export default function CardDeteil() {
                         </audio>
                       </div>
                     </div>
-
-
                   </dialog>
-
-
-
                   {/* Rasm box */}
 
-                  <button className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium  border cursor-pointer text-matn-color  border-black"
+                  <button disabled={!Fotos} className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium  border cursor-pointer text-matn-color  border-black"
                     onClick={() => document.getElementById('rasm').showModal()}
-
                   >
                     Rasm
                     <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -119,24 +166,12 @@ export default function CardDeteil() {
                     </form>
                     <Swiper className="mySwiper h-[80vh]">
                       {/* {apiData?.iterive_list?.map((e) => */}
-                      <SwiperSlide className="text-matn-color bg-no-repeat bg-contain bg-center " style={{ backgroundImage: `url(${apiData?.image})` }} ></SwiperSlide>
+                      <SwiperSlide className="text-matn-color bg-no-repeat bg-contain bg-center " style={{ backgroundImage: `url(${Fotos})` }} ></SwiperSlide>
                       {/* )} */}
-
-
-
                     </Swiper>
-
-
-
                   </dialog>
-
-
-
-
-
                   {/* ............Video................ */}
-
-                  <button className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black"
+                  <button disabled={!videos} className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black"
                     onClick={() => document.getElementById('video').showModal()}
                   >
                     Video
@@ -159,23 +194,30 @@ export default function CardDeteil() {
                   <dialog id="video" className="modal w-full bg-[#000000aa] h-full m-auto  ">
                     <form method="dialog" className=" w-[100%] flex justify-end">
                       {/* if there is a button in form, it will close the modal */}
-                      <button className="btn text-[30px] text-[#fff]"><IoCloseOutline /></button>
+                      <button className="btn text-[30px] text-[#fff]"
+
+                      ><IoCloseOutline /></button>
                     </form>
                     <div className="h-[90%]">
-                      <iframe
-                        className="w-full h-full aspect-[4/3]"
-                        src="https://www.youtube.com/embed/FF3fuYLnApQ"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen>
-                      </iframe>
+                      {apiData?.videos?.map((e) =>
+                        <iframe key={e}
+                          className="w-full h-full aspect-[4/3]"
+                          src={e?.link}
+                          frameBorder="0"
+                          // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen>
+                        </iframe>
+                      )}
+                      {/* <div> */}
+
+
+                      {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/vr-I2HIVmTw?si=r4g48_9EzY6PtczQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
+
                     </div>
                   </dialog>
 
-
                   {/* Tex box */}
-
-                  <button disabled className="flex disabled items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black">
+                  <button disabled={!Files} className="flex disabled items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black">
                     Text
                     <svg width="20px" fill="#fff" height="20px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                       <title>file-text-solid</title>
@@ -198,7 +240,7 @@ export default function CardDeteil() {
                       </g>
                     </svg>
                   </button>
-                  <button disabled className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black">
+                  <button disabled={!max3d} className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black">
                     3D
                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -209,7 +251,7 @@ export default function CardDeteil() {
                       />
                     </svg>
                   </button>
-                  <button className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black"
+                  <button disabled={!location} className="flex items-center gap-2 rounded-full my-2 py-1 px-4 font-medium border cursor-pointer text-matn-color bg-black border-black"
                     onClick={() => document.getElementById('map').showModal()}
                   >
                     Xarita
@@ -255,38 +297,32 @@ export default function CardDeteil() {
 	C60.979,28.894,60.436,28.85,59.989,29.319z"/>
                     </svg>
                   </button>
-
-                  <dialog id="map" className="modal w-full bg-[#000000aa] h-full m-auto  ">
+                  <dialog id="map" className="bg-[#000000aa] w-full h-[100vh] m-auto">
                     <form method="dialog" className=" w-[100%] flex justify-end">
                       {/* if there is a button in form, it will close the modal */}
                       <button className="btn text-[30px] text-[#fff]"><IoCloseOutline /></button>
                     </form>
-                    <div className="m-auto h-[70vh]">
-                      <div className="h-[70vh]"><CardDetailMap /></div>
+
+
+                    <div
+                      className="flex justify-center items-center h-[85%]">
+                      <CardDetailMap location={apiData?.locations} />
 
 
                     </div>
+
+
+
                   </dialog>
-
-
                 </div>
               </div>
               <div className="flex justify-center flex-col items-center">
-                <img src={apiData?.image} alt="Placeholder Image" className="!rounded object-contain aspect-[6/4] " />
+                {/* <img src={apiData?.image} alt="Placeholder Image" className="!rounded object-contain aspect-[6/4] border" /> */}
+                <div className=" bg-contain bg-no-repeat h-[400px] w-[600px]" style={{ backgroundImage: `url(${apiData?.image})` }}></div>
 
 
                 <div className=" w-full flex gap-[10px] items-center justify-end">
-                  {/* <span className="flex items-center gap-2">
 
-                    <svg fill="#fff" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                      width="18px" height="18px" viewBox="796 796 200 200" enable-background="new 796 796 200 200" xml:space="preserve">
-                      <path d="M896.001,812.517c-55.23,0-100.001,31.369-100.001,70.071c0,18.018,9.72,34.439,25.67,46.851
-	c3.721,2.895,5.446,7.685,4.424,12.286l-6.872,30.926c-0.498,2.242,0.419,4.561,2.316,5.855c1.896,1.295,4.391,1.304,6.297,0.022
-	l36.909-24.804c3.238-2.176,7.17-3.074,11.032-2.516c6.532,0.945,13.294,1.448,20.226,1.448c55.227,0,99.999-31.37,99.999-70.069
-	C996,843.886,951.229,812.517,896.001,812.517z"/>
-                    </svg>
-                    2340
-                  </span> */}
                   <span className="text-[16px] gap-[5px] items-center flex"><IoMdEye className="text-[22px]" /> 20534</span>
                   <button className="btn text-[20px] m-4 " onClick={() => document.getElementById('1').showModal()}><FaShareFromSquare /></button>
                   <dialog id="1" className="modal w-full bg-[#000000aa] h-full m-auto  ">
@@ -365,7 +401,6 @@ export default function CardDeteil() {
                                 ></path>
                               </svg>
                             </div>
-
                             <div
                               className="border hover:bg-[#229ED9] w-12 h-12 fill-[#229ED9] hover:fill-[white] border-[#ccc] rounded-full flex items-center justify-center shadow-xl hover:shadow-sky-500/50 cursor-pointer"
                             >
@@ -381,7 +416,6 @@ export default function CardDeteil() {
                               </svg>
                             </div>
                           </div>
-
                           <p className="text-sm">havolani nusxalansh</p>
                           <div className="border-2 border-[#ccc] rounded flex justify-between items-center mt-4 py-2">
                             <svg
@@ -398,42 +432,34 @@ export default function CardDeteil() {
                                 d="m12 4.929-.707.707 1.414 1.414.707-.707a3.007 3.007 0 0 1 4.243 0 3.005 3.005 0 0 1 0 4.243l-2.122 2.121c-1.133 1.133-3.109 1.133-4.242 0L10.586 12l-1.414 1.414.707.707c.943.944 2.199 1.465 3.535 1.465s2.592-.521 3.535-1.465L19.071 12a5.008 5.008 0 0 0 0-7.071 5.006 5.006 0 0 0-7.071 0z"
                               ></path>
                             </svg>
-
                             <input className="w-full outline-none bg-transparent  " type="text" placeholder="link" defaultValue="https://boxicons.com/?query=link" />
-
                             <button className="bg-indigo-500 text-white rounded text-sm py-2 px-5 mr-2 hover:bg-indigo-600">
                               Copy
                             </button>
                           </div>
                         </div>
                       </div>
-
                     </div>
-
                   </dialog>
-
-
                 </div>
               </div>
             </div>
             <section className="text-matn-color my-[30px]">
-              <p className="">
-                {apiData?.contents_list?.map((e) =>
+              <div>
+                {apiData?.contents_list?.map((e, i) =>
                   <>
-                    <h1 className="py-[20px] font-bold text-[30px]">
-                      {e.contents_title}
-                    </h1>
-                    <p className="py-[20px] text-[20px] leading-8">
-                      {
-                        e.contents_description}
-                    </p>
+                    <div key={e.contents_title}>
+                      <h1 className="py-[20px] font-bold text-[30px]" >
+                        {e.contents_title}
+                      </h1>
+                      <p className="py-[20px] text-[20px] leading-8" dangerouslySetInnerHTML={{ __html: e.contents_description }} >
+                      </p>
+                    </div>
                   </>
-
-
                 )}
 
 
-              </p>
+              </div>
             </section>
           </div>
 

@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      flexGrow: {
+        1: 1,
+        2: 2,
+      },
+    },
     colors: {
       "custom-color": "#0e212d",
       "matn-color": "#fff",

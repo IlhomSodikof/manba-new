@@ -11,10 +11,10 @@ $defaultSeconds: 3s;
 .acardions {
   width: 100%;
   font-family: "Dr Sugiyama", cursive;
-  margin-top: -50px;
+  // margin-top: -10px;
   z-index: 1;
   position: relative;
-  background: transparent;
+  // background: rgb(53, 50, 50);
   height: 70vh;
   display: flex;
   justify-content: center;
@@ -48,40 +48,46 @@ $defaultSeconds: 3s;
 .flex-container:hover .flex-slide .flex-title {
   font-size: 10px;
 }
-.acc_img1,
-.acc_img2,
-.acc_img3,
-.acc_img4,
-.acc_img5,
-.acc_img6 .flex-title {
-  font-family: "PT Serif", serif;
-  font-weight: 500;
-  font-style: italic;
-}
+// .acc_img1,
+// .acc_img2,
+// .acc_img3 .flex-title {
+//   font-family: "Lora", serif;
+//   font-optical-sizing: auto;
+// }
+// .acc_img4,
+// .acc_img5,
+// .acc_img6 .flex-title {
+//   font-family: "Cormorant Garamond", serif;
+//   font-weight: 500;
+// }
 
-.acc_img7,
-.acc_img8,
-.acc_img9,
-.acc_img10,
-.acc_img11,
-.acc_img12 .flex-title {
-  font-family: "Dancing Script", cursive;
-  font-optical-sizing: auto;
-  font-weight: bold;
-  font-style: normal;
-}
+// .acc_img7,
+// .acc_img8,
+// .acc_img9,
+// .acc_img10,
+// .acc_img11,
+// .acc_img12 .flex-title {
+//   font-family: "Dancing Script", cursive;
+//   font-optical-sizing: auto;
+//   font-weight: bold;
+//   font-style: normal;
+// }
 
-.i1,
-.i2,
-.i3,
-.i4 .flex-title {
+// .i1,
+// .i2,
+// .i3,
+// .i4 .flex-title {
+//   font-family: "Merienda", cursive;
+//   font-optical-sizing: auto;
+//   font-weight: bold;
+//   font-style: normal;
+// }
+
+.flex-title {
   font-family: "Merienda", cursive;
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
-}
-
-.flex-title {
   font-weight: 500;
   width: 100%;
   color: #f1f1f1;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 // import Pattern from "../Components/component/Pattern";
 import { DataService } from "../config/dataService";
 import { endpoints } from "../config/endpoints";
@@ -7,9 +7,14 @@ import dateFormat from "dateformat";
 import { IoMdEye } from "react-icons/io";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
+import Breadcrumb from "../Components/component/Breadcrumb";
 
 export default function News() {
   const [text, setText] = useState('http://localhost:5174/libraryDetail/40');
+  // const [apiData, setApiData] = useState();
+  const [apiVideo, setVideo] = useState();
+  const [activeId, setActiveId] = useState();
+  const [firstData, setFistData] = useState();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text).then(() => {
@@ -31,10 +36,11 @@ export default function News() {
 
   const [mth, setMth] = useState()
   const arr = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"]
-
+  const route = useParams();
   const navigate = useNavigate();
   // bu qism api lar bilan ishlash uchun
   const [apiData, setApiData] = useState();
+  const [apiDataDetail, setApiDataDetail] = useState();
   const fetchData = async () => {
     const response = await DataService.get(endpoints.news);
     console.log(response, "newslardfdsfdfsdfdsfdsfdsfdsrerere");
@@ -45,34 +51,63 @@ export default function News() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const onChangeId = (id) => {
+
+    setActiveId(id);
+    navigate(`/news/${id}`);
+
+  };
+
+  const fetchDataDetail = async () => {
+    const response = await DataService.get(endpoints.newsById(activeId ?? route.id));
+    setApiDataDetail(response);
+    console.log('bu big detailsdanku', response);
+    // let x = document.querySelector("title");
+    // x.textContent = `Jadidlar / ${response.title}`;
+
+    // console.log(response?.id, "shundamikan ?????????");
+    // navigate(`/news/${response?.id}`);
+
+
+  };
+
+  useEffect(() => {
+    fetchDataDetail();
+  }, [route?.id, activeId]);
+
   return (
     <>
+      <Breadcrumb catigory={'Yangiliklar'} />
       <div className="card__container container" >
+
         <div className="news__container ">
-          <div className="section-title">
+          {/* <div className="section-title">
             <h1 className="m-[10px]">Eng so'ngi yangiliklar </h1>
-          </div>
-
-          <section class="relative py-20 w-full flex justify-center">
-            <img class="absolute top-0 right-0 xl:mt-10 -mr-24 lg:-mr-0" src="saturn-assets/images/blog/star-circle-right.svg" alt="" />
-            <img class="hidden sm:block absolute bottom-0 left-0 -mb-48 lg:mb-0" src="saturn-assets/images/blog/blue-light-left.png" alt="" />
-            <div class="relative w-full ">
-              <div class="max-w-2xl   lg:max-w-full mx-auto">
-
-                <div class="flex flex-wrap p-[20px] -mx-4 mb-18">
-                  <div class="w-full lg:w-[65%] px-4 mb-12 lg:mb-0">
+          </div> */}
 
 
+          <section className="relative py-20 w-full flex justify-center">
+            <img className="absolute top-0 right-0 xl:mt-10 -mr-24 lg:-mr-0" src="saturn-assets/images/blog/star-circle-right.svg" alt="" />
+            <img className="hidden sm:block absolute bottom-0 left-0 -mb-48 lg:mb-0" src="saturn-assets/images/blog/blue-light-left.png" alt="" />
+            <div className="relative w-full ">
+              <div className="max-w-2xl   lg:max-w-full mx-auto">
 
-                    <a class="block group   text-matn-color" href="#"  >
-                      <h4 class="text-3xl font-semibold text-gray-900 group-hover:text-orange-900 mb-5">{apiData?.results[0].title}</h4>
-                      <span class=" text-gray-500 flex items-center gap-2 mb-5">{dateFormat(apiData?.results[0].date, "yyyy-'yil' dd-",)}{arr[dateFormat(apiData?.results[0].date, "m")]}  <span className="flex items-center gap-[5px] px-[5px]"> <IoMdEye className="text-[20px]" />10365</span></span>
-
-                      <img class="block w-full h-[500px] mr-[100px] rounded mb-5" src="https://t4.ftcdn.net/jpg/01/69/58/41/240_F_169584197_9hkge0DqDdgB7hGPJd6KUTEiAtyKV2nU.jpg" alt="" />
+                <div className="flex flex-wrap p-[20px] -mx-4 mb-18">
+                  <div className="w-full lg:w-[65%] px-4 mb-12 lg:mb-0">
 
 
 
-                      <p class=" text-lg lg:min-h-[40vh]  text-gray-500">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate culpa debitis libero aperiam quod, suscipit enim deleniti temporibus repudiandae impedit accusamus est consequatur provident odit asperiores eaque voluptatum! Odit, magni. Pariatur corporis repudiandae rerum culpa? Ipsum ad hic facilis odio a ducimus quos nihil. Mollitia placeat quod exercitationem? Fugiat libero maxime est nulla corporis aliquam maiores dolore doloremque labore! Ipsam explicabo totam veniam dolor. Vel numquam incidunt debitis ratione consequatur esse totam corrupti, quisquam unde cum! Quod, aspernatur sunt nihil recusandae a facere placeat suscipit cupiditate quidem nisi necessitatibus dicta fugit hic quas adipisci laudantium? Id in consequuntur quae tempora.</p>
+                    <a className="block group   text-matn-color" href="#"  >
+                      <h4 className="text-3xl font-semibold text-gray-900 group-hover:text-orange-900 mb-5">{apiDataDetail?.title}</h4>
+                      <span className=" text-gray-500 flex items-center gap-2 mb-5">{dateFormat(apiDataDetail?.created_time, "yyyy-'yil' dd-",)}{arr[dateFormat(apiDataDetail?.created_time, "m")]}  <span className="flex items-center gap-[5px] px-[5px]"> <IoMdEye className="text-[20px]" />10365</span></span>
+
+                      <img className="block w-full h-[500px] mr-[100px] rounded mb-5" src={apiDataDetail?.file} alt="" />
+
+
+
+                      {/* <p className=" text-lg lg:min-h-[40vh]  text-gray-500">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate culpa debitis libero aperiam quod, suscipit enim deleniti temporibus repudiandae impedit accusamus est consequatur provident odit asperiores eaque voluptatum! Odit, magni. Pariatur corporis repudiandae rerum culpa? Ipsum ad hic facilis odio a ducimus quos nihil. Mollitia placeat quod exercitationem? Fugiat libero maxime est nulla corporis aliquam maiores dolore doloremque labore! Ipsam explicabo totam veniam dolor. Vel numquam incidunt debitis ratione consequatur esse totam corrupti, quisquam unde cum! Quod, aspernatur sunt nihil recusandae a facere placeat suscipit cupiditate quidem nisi necessitatibus dicta fugit hic quas adipisci laudantium? Id in consequuntur quae tempora.</p> */}
+                      <p className=" text-lg lg:min-h-[40vh]  text-gray-500">{apiDataDetail?.content}</p>
                       <button className="btn lg:text-[28px] text-[20px] " onClick={() => document.getElementById('3').showModal()}><FaShareFromSquare /></button>
                       <dialog id="3" className="modal w-full bg-[#000000aa] h-full m-auto  ">
                         {/*modal share */}
@@ -207,15 +242,19 @@ export default function News() {
                       </dialog>
                     </a>
                   </div>
-                  <div class="w-full lg:w-[35%] px-4 overflow-y-scroll  scrollbar-thin scrollbar-thumb-[#000000] custom-scrollbar scrollbar-track-[#ff000000] scrollbar-rounded h-[130vh]">
+                  <div className="w-full lg:w-[35%] px-4 overflow-y-scroll  scrollbar-thin scrollbar-thumb-[#000000] custom-scrollbar scrollbar-track-[#ff000000] scrollbar-rounded h-[130vh]">
                     {
                       apiData?.results?.map((item) => (
-                        <a class="md:flex group mb-8 flex text-matn-color" href="#" key={item.id}
-                        // onClick={() => navigate(`/newsDetail/${item.id}`)}
+                        <a className="md:flex group mb-8 flex rounded text-matn-color" href="#" key={item.id}
+                          onClick={() => onChangeId(item.id)}
+                          style={{
+                            background: activeId == item.id ? "#3f3e3e" : "",
+                            color: activeId == item.id ? "#fff" : "",
+                          }}
                         >
-                          <img class="w-[100px] ml-[20px] h-[80px] rounded" src={item.file_url} alt="" />
-                          <div class="mt-4 md:mt-0 md:ml-6 flex flex-col justify-between pt-2"><h4 class="lg:text-[16px]  font-semibold text-gray-900 group-hover:text-orange-900">{item.title}</h4>
-                            <span class=" text-gray-500 flex lg:gap-[10px] gap-[5px] text-[13px] mb-2">
+                          <img className="w-[100px] ml-[20px] my-[5px] h-[80px] rounded" src={item.file} alt="" />
+                          <div className="mt-4 md:mt-0 md:ml-6 flex flex-col justify-between pt-2"><h4 className="lg:text-[16px]  font-semibold text-gray-900 group-hover:text-orange-900">{item.title}</h4>
+                            <span className=" text-gray-500 flex lg:gap-[10px] gap-[5px] text-[13px] mb-2">
                               {dateFormat(item.created_time, "yyyy-'yil' dd-",)}{arr[dateFormat(apiData?.results[0].date, "m")]}  <span className="flex items-center gap-[5px] px-[5px]"> <IoMdEye className="text-[20px]" />10365</span>
                             </span>
 
@@ -228,9 +267,9 @@ export default function News() {
 
                   </div>
                 </div>
-                <div class="text-center">
-                  <a class="relative group inline-block py-4 px-7 font-semibold text-orange-900 hover:text-orange-50 rounded-full bg-orange-50 transition duration-300 overflow-hidden" href="#">
-                    <div class="absolute top-0 right-full w-full h-full bg-gray-900 transform group-hover:translate-x-full group-hover:scale-102 transition duration-500"></div>
+                <div className="text-center">
+                  <a className="relative group inline-block py-4 px-7 font-semibold text-orange-900 hover:text-orange-50 rounded-full bg-orange-50 transition duration-300 overflow-hidden" href="#">
+                    <div className="absolute top-0 right-full w-full h-full bg-gray-900 transform group-hover:translate-x-full group-hover:scale-102 transition duration-500"></div>
 
                   </a>
                 </div>

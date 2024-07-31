@@ -6,6 +6,7 @@ import { IoMdSettings } from "react-icons/io";
 import { Outlet } from "react-router";
 import Header from "./assets/Components/Layout/Header";
 import Footer from "./assets/Components/Layout/Footer";
+import LoaderCard from "./assets/Components/component/LoaderCard";
 // import rasm from "../src/assets/img/fon5.jpg";
 
 export default function Layout() {
@@ -13,7 +14,7 @@ export default function Layout() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoad(false);
-    }, 1000);
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -28,7 +29,7 @@ export default function Layout() {
     <>
       {load ? (
         <div className="loyaut-loader" >
-          loaddddddd.....
+          <LoaderCard />
         </div>
       ) : (
         <div className="layoute-container">

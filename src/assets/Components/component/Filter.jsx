@@ -27,21 +27,21 @@ export default function Filter() {
   // fetch Data
 
   const [apiData, setApiData] = useState();
-  const fetchData = async () => {
-    const response = await DataService.get(endpoints.period_filter);
-    // console.log(response, "period_filter");
-    setApiData(response);
-    // let x = document.querySelector("title");
-    // x.textContent = `Jadidlar / ${response.title}`;
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const fetchData = async () => {
+  //   const response = await DataService.get(endpoints.period_filter);
+  //   console.log(response, "period_filter");
+  //   setApiData(response);
+  //   // let x = document.querySelector("title");
+  //   // x.textContent = `Jadidlar / ${response.title}`;
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   return (
     <div className="sidebar-filter">
       {/* // map shuni ichida ishlidi */}
 
-      <h1 className="sidebar-title">
+      <h1 className="sidebar-title text-matn-color" >
         Archialogiya yodgorliklari
         <span
           onClick={() => {
@@ -69,8 +69,8 @@ export default function Filter() {
             <IoIosClose />
           </span>
         </h2>
-        {apiData?.results.map((e) => (
-          <div className="filter-box" key={e.id}>
+        {[1, 2, 3, 4, 5, 6].map((e) => (
+          <div className="filter-box" key={e}>
             {/* setVal({ ...val, key: e, value: !val.value }) */}
             <h3>
               Davr bo'yicha{" "}

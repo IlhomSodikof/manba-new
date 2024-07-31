@@ -1,47 +1,68 @@
-// src/MapComponent.jsx
 
-import React, { useState } from 'react';
+// export default MapComponent;
+// import React from "react";
+// import { YMaps, Map, Placemark } from "react-yandex-maps";
 
-const MapComponent = ({ lat, long }) => {
-  const [showPopup, setShowPopup] = useState(false);
+// const CardDetailMap = ({ location }) => {
+//   const mapState = {
+//     center: location && location.length > 0 ? [parseFloat(location[0].latitude), parseFloat(location[0].longitude)] : [0, 0], // Agar loc bo'lsa, birinchi lokatsiya markaziy nuqta qilib olinadi
+//     zoom: 5,
+//   };
+//   console.log(location, "shushushushsuhsushush");
+//   return (
+//     <YMaps query={{ apikey: `efc8f45d-1ac0-4e45-832e-dc6fa8cf7f5d` }}>
+//       <Map
+//         defaultState={mapState} width="70%" height="500px">
+//         {location &&
+//           location.map((location) => (
+//             <Placemark
+//               key={location.id}
+//               geometry={[parseFloat(location.latitude), parseFloat(location.longitude)]}
+//             />
+//           ))}
+//       </Map>
+//     </YMaps>
 
-  const mapUrl = `https://maps.google.com/maps?q=${lat},${long}&z=16&output=embed`;
+
+//   );
+// };
+
+// export default CardDetailMap;
+
+
+import React from "react";
+import { YMaps, Map, Placemark } from "react-yandex-maps";
+
+const CardDetailMap = ({ location }) => {
+  const mapState = {
+    center: location && location.length > 0 ? [parseFloat(location[0].latitude), parseFloat(location[0].longitude)] : [0, 0],
+    zoom: 5,
+  };
+
+  const markers = location || [];
 
   return (
-
-    <div>
-      <div className="w-full h-[80vh] relative">
-        <iframe
-          src={mapUrl}
-          className="w-full  h-full"
-          allowFullScreen=""
-          loading="lazy"
-          title="Google Map"
-        ></iframe>
-        <button
-          onClick={() => setShowPopup(true)}
-          className="absolute top-28  right-4 bg-[red] text-[white] py-2 px-4 rounded"
-        >
-          Show Popup
-        </button>
-        {showPopup && (
-          <div className="absolute top-0  left-0 w-full h-full flex items-center justify-center ">
-            <div className=" p-8 rounded bg-[white] shadow-lg">
-              <h2 className="text-2xl mb-4">Joylashuv nuqtasi</h2>
-              <p>Bu shu shu bu bu shu Bu shu shu bu bu shu</p>
-              <button
-                onClick={() => setShowPopup(false)}
-                className="mt-4 bg-[red] text-[white] py-2 px-4 rounded"
-              >
-                yopish
-              </button>
-            </div>
-          </div >
-        )}
-      </div>
-
-    </div >
+    <YMaps query={{ apikey: `efc8f45d-1ac0-4e45-832e-dc6fa8cf7f5d` }}>
+      <Map defaultState={mapState} width="70%" height="500px">
+        {markers.map((loc) => (
+          <Placemark
+            key={loc.id}
+            geometry={[parseFloat(loc.latitude), parseFloat(loc.longitude)]}
+            properties={{
+              balloonContentHeader: loc.title,
+              balloonContentBody: loc.title,
+              balloonContentFooter: "qisqa ma'lumot" // Optional footer content
+            }}
+            options={{
+              preset: 'islands#icon',
+              iconColor: '#0095b6'
+            }}
+            modules={['geoObject.addon.balloon']}
+          />
+        ))}
+      </Map>
+    </YMaps>
   );
 };
 
-export default MapComponent;
+export default CardDetailMap;

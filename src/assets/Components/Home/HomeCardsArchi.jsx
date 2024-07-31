@@ -31,7 +31,7 @@ export default function HomeCardsArchi() {
       <div className="home__card__container">
         <div className="home__wrapper">
           {apiData?.results?.map((categoryApi) => (
-            <div key={categoryApi.id}>
+            categoryApi?.category.length > 0 ? <div key={categoryApi.id}>
               <div className="home__cards__title">
                 <h1>{categoryApi.title}</h1>
                 <Link to="/sources/archive">
@@ -41,7 +41,7 @@ export default function HomeCardsArchi() {
               <Swiper
                 slidesPerView={1}
                 spaceBetween={10}
-                pagination={{ clickable: true }}
+                pagination={{ clickable: false }}
                 breakpoints={{
                   800: { slidesPerView: 2, spaceBetween: 20 },
                   1075: { slidesPerView: 4, spaceBetween: 40 },
@@ -51,44 +51,34 @@ export default function HomeCardsArchi() {
               >
                 {categoryApi?.category?.map((cat) => (
                   <SwiperSlide key={cat.id}>
-                    {/* <div className="home__card">
-                      <img src={cat.image} alt="" />
-                      <div className="home__info">
-                        <h1>{cat.title}</h1>
-                        <p>{cat.content}</p>
-                        <Link
-                          to={`/cardDetail/${cat.id}`}
-                          className="home__btn"
-                        >
-                          Read More
-                        </Link>
-                      </div>
-                    </div> */}
 
-                    <article className="relative w-[300px] cursor-pointer overflow-hidden rounded-lg shadow transition hover:shadow-lg">
-                      <img
-                        alt=""
-                        src={cat.image}
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                      <Link to={`/cardDetail/${cat.id}`}>  <div className="relative bg-gradient-to-t from-gray-900/50 to-gray-900/25 pt-32 sm:pt-48 lg:pt-64">
-                        <div className="p-4 sm:p-6">
+                    <Link to={`/cardDetail/${cat.id}`}
+                      class="group relative cursor-pointer w-[280px] h-[340px] overflow-hidden px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300  hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10 bg-no-repeat bg-cover bg-center"
+                      style={{ backgroundImage: "url(" + `${cat.image}` + ")", }}
+                    >
+                      <span class="absolute top-10 z-0 h-20 w-20 rounded-full bg-[transparent] transition-all duration-300 group-hover:bg-[#0e212db0] group-hover:scale-[10]"></span>
+                      <div class="relative z-10 mx-auto max-w-md">
+                        <span class=" grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400">
 
-
-
-                          <h2 className="mt-0.5 text-lg text-matn-color">{cat.title}</h2>
-
-
+                        </span>
+                        <div
+                          class="space-y-6 pt-5 text-base leading-7 text-[transparent] transition-all duration-300 group-hover:text-[white]">
+                          <p className="font-bold text-[18px] tracking-[1px]">{cat.title}</p>
+                        </div>
+                        <div class="pt-5 text-base font-semibold leading-7">
+                          <p>
+                            <a href="#" class="text-[transparent] transition-all duration-300 group-hover:text-[white]">batafsil
+                              &rarr;
+                            </a>
+                          </p>
                         </div>
                       </div>
-                      </Link>
-
-                    </article>
+                    </Link>
                   </SwiperSlide>
                 ))}
               </Swiper>
             </div>
-          ))}
+              : ""))}
         </div>
         <div className="Left_pattern">
           <img src={bgPattern} alt="" />
