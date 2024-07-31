@@ -9,6 +9,7 @@ import HomeSliderLib from '../Components/Home/HomeSliderLib'
 import LoaderCard from '../Components/component/LoaderCard'
 import Tabs from '../Components/component/Tabs'
 import BigMaps from '../Components/Home/TabsWithMap'
+import Namuna from '../Components/component/Namuna'
 
 export default function Home() {
   return (
@@ -17,6 +18,8 @@ export default function Home() {
       {/* <Map /> */}
       {/* <Tabs /> */}
       <BigMaps />
+
+      <Namuna />
       {/* <HomeCardsArchi /> */}
 
 
